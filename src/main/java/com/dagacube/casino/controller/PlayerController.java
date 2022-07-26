@@ -57,6 +57,9 @@ public class PlayerController {
           
          if(balance >= 0) {
         	 player.setBalance(balance);
+        	 player.setAmount(30000);
+        	 player.setTransactionId(1);
+        	 player.setTransactionType("WIN");
          }
         final Player updatedPlayer = playerRepository.save(player);
         return ResponseEntity.ok(updatedPlayer);
