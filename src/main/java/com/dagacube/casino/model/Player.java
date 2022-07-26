@@ -13,14 +13,21 @@ public class Player {
 	
 	    private long id;
 	    private long balance;
+	    private long amount;
+	    private long transactionId;
+	    private String transactionType; 
+	    
 	   
 
 	    public Player() {
 
 	    }
 
-	    public Player(long balance) {
+	    public Player(long balance,long amount,long transactionId,String transactionType) {
 	        this.balance = balance;
+	        this.amount = amount;
+	        this.transactionId = transactionId;
+	        this.transactionType = transactionType;
 	    }
 
 	    @Id
@@ -39,5 +46,29 @@ public class Player {
 	    public void setBalance(long balance) {
 	        this.balance = balance;
 	    }
+
+		public long getAmount() {
+			return amount;
+		}
+
+		public void setAmount(long amount) {
+			this.amount = amount;
+		}
+
+		public long getTransactionId() {
+			return transactionId;
+		}
+
+		public void setTransactionId(long transactionId) {
+			this.transactionId = transactionId;
+		}
+
+		public String getTransactionType() {
+			return transactionType;
+		}
+
+		public void setTransactionType(String transactionType) {
+			this.transactionType = transactionType;
+		}
 
 }
