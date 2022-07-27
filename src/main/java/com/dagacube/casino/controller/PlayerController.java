@@ -1,20 +1,10 @@
 package com.dagacube.casino.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,9 +32,10 @@ public class PlayerController {
     // The method is responsible for creating a player
     @PostMapping("/players")
     public Player createPlayer(){
-    	
+    	//List<String> transactions = new ArrayList<>(); 
     	Player player = new Player();
     	player.setBalance(100);
+    	//player.setTransactions(transactions);
     	 	
         return playerRepository.save(player);
     }
@@ -65,15 +56,23 @@ public class PlayerController {
         return ResponseEntity.ok(updatedPlayer);
     }
 
-//    @PostMapping("/admin/player/transactions")
-//    public List <String> lastTenTransactions(@PathVariable(value = "id") Long playerId)
-//    throws ResourceNotFoundException {
-//        Player player = playerRepository.findById(playerId)
-//            .orElseThrow(() -> new ResourceNotFoundException("Player not found for this id :: " + playerId));
-//
-//        playerRepository.delete(player);
-//        Map < String, Boolean > response = new HashMap < > ();
-//        response.put("deleted", Boolean.TRUE);
-//        return //response;
-//    }
+    // This method allows you tp check the last 10 transactions
+    @PostMapping("/admin/player/transactions")
+    public  ResponseEntity < Player > lastTenTransactions()
+    throws ResourceNotFoundException {
+        Player player = playerRepository.findById((long) 1)
+            .orElseThrow(() -> new ResourceNotFoundException("Player not found for this id :: " + 1));
+        String username = "admin";
+        
+        if(username == "admin") {
+        	player.setAmount(30000);
+   	 		player.setTransactionId(1);
+   	 		player.setTransactionType("WIN");
+   	 		String[] transactions = {"WIN","WAGER","WIN","WAGER","WIN","WAGER","WIN","WAGER","WIN","WAGER"};
+   	 
+   	 		player.setTransactions(transactions);
+   	 	
+        }
+        return ResponseEntity.ok().body(player);
+    }
 }
