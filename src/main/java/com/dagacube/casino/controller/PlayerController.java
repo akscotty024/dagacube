@@ -32,10 +32,9 @@ public class PlayerController {
     // The method is responsible for creating a player
     @PostMapping("/players")
     public Player createPlayer(){
-    	//List<String> transactions = new ArrayList<>(); 
+    	
     	Player player = new Player();
     	player.setBalance(100);
-    	//player.setTransactions(transactions);
     	 	
         return playerRepository.save(player);
     }
@@ -43,15 +42,17 @@ public class PlayerController {
     // This method updates the balance of a particular id
     @PostMapping("/player/{playerId}/{balance}/update")
     public ResponseEntity < Player > updatePlayer(@PathVariable(value = "playerId")Long playerId, @PathVariable(value = "balance")Long balance) throws ResourceNotFoundException {
-          Player player = playerRepository.findById(playerId)
+          
+    	Player player = playerRepository.findById(playerId)
             .orElseThrow(() -> new ResourceNotFoundException("Player not found for this id :: " + playerId));
           
-         if(balance >= 0) {
+        if(balance >= 0) {
         	 player.setBalance(balance);
         	 player.setAmount(30000);
         	 player.setTransactionId(1);
         	 player.setTransactionType("WIN");
-         }
+        }
+        
         final Player updatedPlayer = playerRepository.save(player);
         return ResponseEntity.ok(updatedPlayer);
     }
